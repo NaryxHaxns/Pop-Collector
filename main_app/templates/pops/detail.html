@@ -11,6 +11,10 @@
     <p>Number: {{ pop.number }}</p>
     <p>Description: {{ pop.description }}</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'pops_update' pop.id %}">Edit</a>
+    <a href="{% url 'pops_delete' pop.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}
