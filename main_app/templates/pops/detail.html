@@ -3,18 +3,55 @@
 
 <h1>Pop! Details</h1>
 
-<div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ pop.name }}</span>
-    <p>Group: {{ pop.group }}</p>
-    <p>Title: {{ pop.title }}</p>
-    <p>Number: {{ pop.number }}</p>
-    <p>Description: {{ pop.description }}</p>
-  </div>
-  <div class="card-action">
-    <a href="{% url 'pops_update' pop.id %}">Edit</a>
-    <a href="{% url 'pops_delete' pop.id %}">Delete</a>
-  </div>
+<div class="row">
+    <div class="col s6">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">{{ pop.name }}</span>
+                <p>Group: {{ pop.group }}</p>
+                <p>Title: {{ pop.title }}</p>
+                <p>Number: {{ pop.number }}</p>
+                <p>Description: {{ pop.description }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'pops_update' pop.id %}">Edit</a>
+                <a href="{% url 'pops_delete' pop.id %}">Delete</a>
+            </div>
+        </div>
+    </div>
+    <div class="col s6">
+        <form action="{% url 'add_dusting' pop.id %}" method="POST">
+            {% csrf_token %}
+            {{ dusting_form.as_p }}
+            <input type="submit" value="Clean Pop!" class="btn">
+        </form>
+        <table class="striped">
+            <thead>
+                <tr><th>Date</th><th>Method</th></tr>
+            </thead>
+            <tbody>
+                {% for dusting in pop.dusting_set.all %}
+                <tr>
+                    <td>{{dusting.date}}</td>
+                    <td>{{dusting.get_method_display}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script>
+    const dateEl = document.getElementById('id_date');
+    M.Datepicker.init(dateEl, {
+        format: 'yyyy-mm-dd',
+        defaultDate: new Date(),
+        setDefaultDate: true,
+        autoClose: true
+    })
+
+    const selectEl = document.getElementById('id_method');
+    M.FormSelect.init(selectEl);
+</script>
 
 {% endblock %}
