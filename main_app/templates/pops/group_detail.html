@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Group Details</h1>
+
+<div class="row">
+  <div class="col s6 col-offset-3">
+    <div class="card">
+      <div class="card-content">
+            {% if image %}
+                <img src="{{ group.image }}" alt="{{ group.name }}">
+            {% else %}
+                <span class="card-title">{{ group.name }}</span>
+            {% endif %}
+      </div>
+      <div class="card-action">
+        <a href="{% url 'groups_update' group.id %}">Edit</a>
+        <a href="{% url 'groups_delete' group.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

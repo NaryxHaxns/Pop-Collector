@@ -8,7 +8,6 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title">{{ pop.name }}</span>
-                <p>Group: {{ pop.group }}</p>
                 <p>Title: {{ pop.title }}</p>
                 <p>Number: {{ pop.number }}</p>
                 <p>Description: {{ pop.description }}</p>
@@ -25,6 +24,12 @@
             {{ dusting_form.as_p }}
             <input type="submit" value="Clean Pop!" class="btn">
         </form>
+        <br>
+        {% if pop.dusted_today %}
+            <div class="card-panel teal-text center-align">{{pop.name}} has been sufficiently cleaned today.</div>
+        {% else %}
+            <div class="card-panel red-text center-align">{{pop.name}} looks filthy! Protect your investment!</div>
+        {% endif %}
         <table class="striped">
             <thead>
                 <tr><th>Date</th><th>Method</th></tr>
@@ -39,6 +44,57 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ pop.name }}'s Groups</h3>
+    {% if pop.groups.count %}
+      {% for group in pop.groups.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+                {% if image %}
+                    <img src="{{ group.image }}" alt="{{ group.name }}">
+                {% else %}
+                    {{ group.name }}
+                {% endif %}
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>This Pop! doesn't belong to any groups.</h5>
+    {% endif %}
+  </div>
+
+  <div class="col s6">
+    <h3>Available Groups</h3>
+    {% if groups.count %}
+      {% for group in groups.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+                {% if image %}
+                    <img src="{{ group.image }}" alt="{{ group.name }}">
+                {% else %}
+                    {{ group.name }}
+                {% endif %}
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_group' pop.id group.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{pop.name}} belongs to all available Groups</h5>
+    {% endif %}
+  </div>
 </div>
 
 <script>
