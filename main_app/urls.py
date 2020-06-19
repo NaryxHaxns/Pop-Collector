@@ -11,6 +11,7 @@ urlpatterns = [
     path('pops/<int:pk>/delete/', views.PopDelete.as_view(), name='pops_delete'),
     path('pops/<int:pop_id>/add_dusting/', views.add_dusting, name='add_dusting'),
     path('pops/<int:pop_id>/assoc_group/<int:group_id>/', views.assoc_group, name='assoc_group'),
+    path('pops/<int:pop_id>/disassoc_group/<int:group_id>/', views.disassoc_group, name='disassoc_group'),
     path('groups/', views.GroupList.as_view(), name='groups_index'),
     path('groups/<int:pk>/', views.GroupDetail.as_view(), name='groups_detail'),
     path('groups/create/', views.GroupCreate.as_view(), name='groups_create'),

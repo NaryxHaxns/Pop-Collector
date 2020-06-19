@@ -29,6 +29,11 @@ def assoc_group(request, pop_id, group_id):
     pop.groups.add(group_id)
     return redirect('detail', pop_id=pop_id)
 
+def disassoc_group(request, pop_id, group_id):
+    pop = Pop.objects.get(id=pop_id)
+    pop.groups.remove(group_id)
+    return redirect('detail', pop_id=pop_id)
+
 def add_dusting(request, pop_id):
     form = DustingForm(request.POST)
     if form.is_valid():
@@ -39,11 +44,11 @@ def add_dusting(request, pop_id):
 
 class PopCreate(CreateView):
     model = Pop
-    fields = '__all__'
+    fields = ['name', 'title', 'number', 'description']
 
 class PopUpdate(UpdateView):
     model = Pop
-    fields = '__all__'
+    fields = ['name', 'title', 'number', 'description']
 
 class PopDelete(DeleteView):
     model = Pop

@@ -28,7 +28,7 @@
         {% if pop.dusted_today %}
             <div class="card-panel teal-text center-align">{{pop.name}} has been sufficiently cleaned today.</div>
         {% else %}
-            <div class="card-panel red-text center-align">{{pop.name}} looks filthy! Protect your investment!</div>
+            <div class="card-panel red-text center-align">{{pop.name}} looks dusty! Protect your investment!</div>
         {% endif %}
         <table class="striped">
             <thead>
@@ -55,12 +55,14 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-                {% if image %}
-                    <img src="{{ group.image }}" alt="{{ group.name }}">
-                {% else %}
-                    {{ group.name }}
-                {% endif %}
+                {{ group.name }}
             </span>
+          </div>
+          <div class="card-action">
+                <form action="{% url 'disassoc_group' pop.id group.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn">Remove</button>
+                </form>
           </div>
         </div>
       {% endfor %}
@@ -76,11 +78,7 @@
         <div class="card">
           <div class="card-content">
             <span class="card-title">
-                {% if image %}
-                    <img src="{{ group.image }}" alt="{{ group.name }}">
-                {% else %}
-                    {{ group.name }}
-                {% endif %}
+                {{ group.name }}
             </span>
           </div>
           <div class="card-action">

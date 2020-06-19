@@ -7,11 +7,7 @@
   <div class="col s6 col-offset-3">
     <div class="card">
       <div class="card-content">
-            {% if image %}
-                <img src="{{ group.image }}" alt="{{ group.name }}">
-            {% else %}
-                <span class="card-title">{{ group.name }}</span>
-            {% endif %}
+        <span class="card-title">{{ group.name }}</span>
       </div>
       <div class="card-action">
         <a href="{% url 'groups_update' group.id %}">Edit</a>
